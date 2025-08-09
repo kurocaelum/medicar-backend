@@ -1,0 +1,88 @@
+package com.kurocaelum.medicar.entities;
+
+import java.io.Serializable;
+import java.time.LocalTime;
+import java.util.Objects;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
+@Entity
+public class HorarioConsulta implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@ManyToOne
+	@JoinColumn(name = "agenda_id")
+	private Agenda agenda;
+	
+	private LocalTime horario;
+	private boolean available;
+	
+	public HorarioConsulta(){}
+
+	public HorarioConsulta(Long id, Agenda agenda, LocalTime horario, boolean available) {
+		super();
+		this.id = id;
+		this.agenda = agenda;
+		this.horario = horario;
+		this.available = available;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Agenda getAgenda() {
+		return agenda;
+	}
+
+	public void setAgenda(Agenda agenda) {
+		this.agenda = agenda;
+	}
+
+	public LocalTime getHorario() {
+		return horario;
+	}
+
+	public void setHorario(LocalTime horario) {
+		this.horario = horario;
+	}
+
+	public boolean isAvailable() {
+		return available;
+	}
+
+	public void setAvailable(boolean available) {
+		this.available = available;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		HorarioConsulta other = (HorarioConsulta) obj;
+		return Objects.equals(id, other.id);
+	}
+	
+}
