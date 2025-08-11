@@ -20,8 +20,8 @@ public class Medico implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String nome;
 	private String crm;
+	private String nome;
 	private String email;
 	
 	@OneToMany(mappedBy = "medico", cascade = CascadeType.ALL)
@@ -29,13 +29,12 @@ public class Medico implements Serializable {
 	
 	public Medico(){}
 
-	public Medico(Long id, String nome, String crm, String email, List<Agenda> agenda) {
+	public Medico(Long id, String crm, String nome, String email) {
 		super();
 		this.id = id;
-		this.nome = nome;
 		this.crm = crm;
+		this.nome = nome;
 		this.email = email;
-		this.agenda = agenda;
 	}
 
 	public Long getId() {

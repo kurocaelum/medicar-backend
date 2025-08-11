@@ -1,6 +1,7 @@
 package com.kurocaelum.medicar.entities;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Objects;
 
@@ -24,16 +25,16 @@ public class HorarioConsulta implements Serializable {
 	private Agenda agenda;
 	
 	private LocalTime horario;
-	private boolean available;
+	private LocalDateTime dataAgendamento;
 	
 	public HorarioConsulta(){}
-
-	public HorarioConsulta(Long id, Agenda agenda, LocalTime horario, boolean available) {
+	
+	public HorarioConsulta(Long id, Agenda agenda, LocalTime horario) {
 		super();
 		this.id = id;
 		this.agenda = agenda;
 		this.horario = horario;
-		this.available = available;
+		this.dataAgendamento = null;
 	}
 
 	public Long getId() {
@@ -60,12 +61,12 @@ public class HorarioConsulta implements Serializable {
 		this.horario = horario;
 	}
 
-	public boolean isAvailable() {
-		return available;
+	public LocalDateTime getDataAgendamento() {
+		return dataAgendamento;
 	}
 
-	public void setAvailable(boolean available) {
-		this.available = available;
+	public void setDataAgendamento(LocalDateTime dataAgendamento) {
+		this.dataAgendamento = dataAgendamento;
 	}
 
 	@Override
