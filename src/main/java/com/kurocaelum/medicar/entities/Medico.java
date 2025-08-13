@@ -36,6 +36,14 @@ public class Medico implements Serializable {
 		this.nome = nome;
 		this.email = email;
 	}
+	
+	public Medico(Long id, String crm, String nome) {
+		super();
+		this.id = id;
+		this.crm = crm;
+		this.nome = nome;
+		this.email = null;
+	}
 
 	public Long getId() {
 		return id;
