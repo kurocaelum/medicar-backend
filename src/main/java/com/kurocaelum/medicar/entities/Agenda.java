@@ -29,11 +29,11 @@ public class Agenda implements Serializable {
 	private LocalDate dia;
 
 	@OneToMany(mappedBy = "agenda", cascade = CascadeType.ALL)
-	private List<HorarioConsulta> horarios = new ArrayList<HorarioConsulta>();
+	private List<Consulta> horarios = new ArrayList<Consulta>();
 	
 	public Agenda(){}
 
-	public Agenda(Long id, Medico medico, LocalDate dia, List<HorarioConsulta> horarios) {
+	public Agenda(Long id, Medico medico, LocalDate dia, List<Consulta> horarios) {
 		super();
 		this.id = id;
 		this.medico = medico;
@@ -65,7 +65,7 @@ public class Agenda implements Serializable {
 		this.dia = dia;
 	}
 
-	public List<HorarioConsulta> getHorarios() {
+	public List<Consulta> getHorarios() {
 		return horarios;
 	}
 

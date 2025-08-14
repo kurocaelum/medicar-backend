@@ -13,7 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class HorarioConsulta implements Serializable {
+public class Consulta implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -27,9 +27,9 @@ public class HorarioConsulta implements Serializable {
 	private LocalTime horario;
 	private LocalDateTime dataAgendamento;
 	
-	public HorarioConsulta(){}
+	public Consulta(){}
 	
-	public HorarioConsulta(Long id, Agenda agenda, LocalTime horario) {
+	public Consulta(Long id, Agenda agenda, LocalTime horario) {
 		super();
 		this.id = id;
 		this.agenda = agenda;
@@ -82,7 +82,7 @@ public class HorarioConsulta implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		HorarioConsulta other = (HorarioConsulta) obj;
+		Consulta other = (Consulta) obj;
 		return Objects.equals(id, other.id);
 	}
 	
