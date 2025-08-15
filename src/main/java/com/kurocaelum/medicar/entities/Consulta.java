@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,6 +24,7 @@ public class Consulta implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "agenda_id")
+	@JsonIgnore
 	private Agenda agenda;
 	
 	private LocalTime horario;

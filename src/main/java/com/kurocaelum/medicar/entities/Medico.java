@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,6 +27,7 @@ public class Medico implements Serializable {
 	private String email;
 	
 	@OneToMany(mappedBy = "medico", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Agenda> agenda = new ArrayList<Agenda>();
 	
 	public Medico(){}
