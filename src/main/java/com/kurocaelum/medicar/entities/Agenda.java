@@ -33,12 +33,11 @@ public class Agenda implements Serializable {
 	
 	public Agenda(){}
 
-	public Agenda(Long id, Medico medico, LocalDate dia, List<Consulta> horarios) {
+	public Agenda(Long id, Medico medico, LocalDate dia) {
 		super();
 		this.id = id;
 		this.medico = medico;
 		this.dia = dia;
-		this.horarios = horarios;
 	}
 
 	public Long getId() {
