@@ -22,11 +22,12 @@ public class Agenda implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	private LocalDate dia;
 	
 	@ManyToOne
 	@JoinColumn(name = "medico_id")
 	private Medico medico;
-	private LocalDate dia;
 
 	@OneToMany(mappedBy = "agenda", cascade = CascadeType.ALL)
 	private List<Consulta> horarios = new ArrayList<Consulta>();
