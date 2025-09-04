@@ -22,13 +22,13 @@ public class Consulta implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	private LocalTime horario;
+	private LocalDateTime dataAgendamento;
+	
 	@ManyToOne
 	@JoinColumn(name = "agenda_id")
 	@JsonIgnore
 	private Agenda agenda;
-	
-	private LocalTime horario;
-	private LocalDateTime dataAgendamento;
 	
 	public Consulta(){}
 	
