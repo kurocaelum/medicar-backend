@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kurocaelum.medicar.dto.AgendaDTO;
 import com.kurocaelum.medicar.entities.Agenda;
 import com.kurocaelum.medicar.services.AgendaService;
 
@@ -19,6 +20,13 @@ public class AgendaResource {
 	private AgendaService service;
 	
 	@GetMapping
+	public ResponseEntity<List<AgendaDTO>> findAllDto() {
+		List<AgendaDTO> list = service.findAllDto();
+		
+		return ResponseEntity.ok().body(list);
+	}
+	
+	@GetMapping(value = "/details")
 	public ResponseEntity<List<Agenda>> findAll() {
 		List<Agenda> list = service.findAll();
 		
