@@ -23,7 +23,7 @@ public class Consulta implements Serializable {
 	private Long id;
 	
 	private LocalTime horario;
-	private LocalDateTime dataAgendamento;
+	private LocalDateTime dataAgendamento = null;
 	
 	@ManyToOne
 	@JoinColumn(name = "agenda_id")
@@ -37,7 +37,14 @@ public class Consulta implements Serializable {
 		this.id = id;
 		this.agenda = agenda;
 		this.horario = horario;
-		this.dataAgendamento = null;
+	}
+
+	public Consulta(Long id, LocalTime horario, LocalDateTime dataAgendamento, Agenda agenda) {
+		super();
+		this.id = id;
+		this.horario = horario;
+		this.dataAgendamento = dataAgendamento;
+		this.agenda = agenda;
 	}
 
 	public Long getId() {
