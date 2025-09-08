@@ -8,7 +8,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.kurocaelum.medicar.dto.ConsultaDTO;
 import com.kurocaelum.medicar.entities.Consulta;
+import com.kurocaelum.medicar.mappers.ConsultaMapper;
 import com.kurocaelum.medicar.repositories.ConsultaRepository;
 import com.kurocaelum.medicar.services.exceptions.DatabaseException;
 import com.kurocaelum.medicar.services.exceptions.ResourceNotFoundException;
@@ -21,8 +23,16 @@ public class ConsultaService {
 	@Autowired
 	private ConsultaRepository repository;
 	
+	@Autowired
+	private ConsultaMapper consultaMapper;
+	
 	public List<Consulta> findAll() {
 		return repository.findAll();
+	}
+	
+	public List<ConsultaDTO> findAllDto() {
+		List<ConsultaDTO> list = consultaMapper.mapConsultaToConsultaDTO(this.findAll());
+		return list;
 	}
 	
 	public Consulta findById(Long id) {

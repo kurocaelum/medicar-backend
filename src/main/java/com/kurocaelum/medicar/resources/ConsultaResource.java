@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kurocaelum.medicar.dto.ConsultaDTO;
 import com.kurocaelum.medicar.entities.Consulta;
 import com.kurocaelum.medicar.services.ConsultaService;
 
@@ -19,6 +20,13 @@ public class ConsultaResource {
 	private ConsultaService service;
 	
 	@GetMapping
+	public ResponseEntity<List<ConsultaDTO>> findAllDto() {
+		List<ConsultaDTO> list = service.findAllDto();
+		
+		return ResponseEntity.ok().body(list);
+	}
+	
+	@GetMapping(value = "/details")
 	public ResponseEntity<List<Consulta>> findAll() {
 		List<Consulta> list = service.findAll();
 		
