@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 import com.kurocaelum.medicar.dto.ConsultaDTO;
 import com.kurocaelum.medicar.entities.Consulta;
@@ -18,6 +19,8 @@ public interface ConsultaMapper {
 	@Mapping(target = "dataAgendamento", source = "consulta.dataAgendamento", dateFormat = "dd/MM/yyyy")
 	@Mapping(target = "medico", source = "consulta.agenda.medico")
 	ConsultaDTO map(Consulta consulta);
-		
+	
+	@Mapping(target = "id", ignore = true)
+	void update(Consulta source, @MappingTarget Consulta target);
 	
 }

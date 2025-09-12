@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,6 +33,7 @@ public class Agenda implements Serializable {
 	private Medico medico;
 
 	@OneToMany(mappedBy = "agenda", cascade = CascadeType.ALL)
+	@Fetch(FetchMode.JOIN)
 	private List<Consulta> horarios = new ArrayList<Consulta>();
 	
 	public Agenda(){}

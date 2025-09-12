@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 import com.kurocaelum.medicar.dto.AgendaDTO;
 import com.kurocaelum.medicar.entities.Agenda;
@@ -37,5 +39,8 @@ public interface AgendaMapper {
 	default boolean isHorarioDisponivel(Consulta consulta) {
 		return consulta.getDataAgendamento() == null;
 	}
+	
+	@Mapping(target = "id", ignore = true)
+	void update(Agenda source, @MappingTarget Agenda target);
 	
 }

@@ -59,16 +59,11 @@ public class AgendaService {
 	public Agenda update(Long id, Agenda obj) {
 		try {
 			Agenda entity = repository.findById(id).get();
-			updateData(entity, obj);
+			agendaMapper.update(obj, entity);
 			
 			return repository.save(entity);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException(id);
 		}
-	}
-	
-	private void updateData(Agenda entity, Agenda obj) {
-		entity.setMedico(obj.getMedico());
-		entity.setDia(obj.getDia());
 	}
 }

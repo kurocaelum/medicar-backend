@@ -59,18 +59,11 @@ public class ConsultaService {
 	public Consulta update(Long id, Consulta obj) {
 		try {
 			Consulta entity = repository.findById(id).get();
-			updateData(entity, obj);
+			consultaMapper.update(obj, entity);
 			
 			return repository.save(entity);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException(id);
 		}
 	}
-	
-	private void updateData(Consulta entity, Consulta obj) {
-		entity.setHorario(obj.getHorario());
-		entity.setAgenda(obj.getAgenda());
-		entity.setDataAgendamento(obj.getDataAgendamento());
-	}
-	
 }
