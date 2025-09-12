@@ -23,7 +23,7 @@ public class MedicoService {
 	private MedicoRepository repository;
 	
 	@Autowired
-	private MedicoMapper mapper;
+	private MedicoMapper medicoMapper;
 	
 	public List<Medico> findAll() {
 		return repository.findAll();
@@ -53,7 +53,7 @@ public class MedicoService {
 	public Medico update(Long id, Medico obj) {
 		try {
 			Medico entity = repository.findById(id).get();
-			mapper.update(obj, entity);
+			medicoMapper.update(obj, entity);
 			
 			return repository.save(entity);
 		} catch (EntityNotFoundException e) {
