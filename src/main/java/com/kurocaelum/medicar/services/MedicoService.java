@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.kurocaelum.medicar.dto.MedicoCreationDTO;
 import com.kurocaelum.medicar.entities.Medico;
 import com.kurocaelum.medicar.mappers.MedicoMapper;
 import com.kurocaelum.medicar.repositories.MedicoRepository;
@@ -34,8 +35,10 @@ public class MedicoService {
 		return obj.get();
 	}
 	
-	public Medico insert(Medico obj) {
-		return repository.save(obj);
+	public Medico insert(MedicoCreationDTO obj) {
+		Medico entity = medicoMapper.createFromDto(obj);
+		
+		return repository.save(entity);
 	}
 	
 	public void delete(Long id) {
