@@ -34,7 +34,7 @@ public class MedicoResource {
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Medico> findById(Long id) {
+	public ResponseEntity<Medico> findById(@PathVariable Long id) {
 		Medico obj = service.findById(id);
 		
 		return ResponseEntity.ok().body(obj);
