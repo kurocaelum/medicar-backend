@@ -1,20 +1,48 @@
 package com.kurocaelum.medicar.mappers;
 
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
+import com.kurocaelum.medicar.dto.AgendaCreationDTO;
 import com.kurocaelum.medicar.dto.AgendaDTO;
 import com.kurocaelum.medicar.entities.Agenda;
 import com.kurocaelum.medicar.entities.Consulta;
+import com.kurocaelum.medicar.services.MedicoService;
 
-@Mapper(componentModel = "spring")
+//@Mapper(componentModel = "spring", uses = { MedicoService.class }, collectionMappingStrategy = CollectionMappingStrategy.ADDER_PREFERRED)
+@Mapper(componentModel = "spring", uses = { MedicoService.class })
 public interface AgendaMapper {
 	
+	@Mapping(target = "id", ignore = true)
+	void update(Agenda source, @MappingTarget Agenda target);
+	
+	@Mapping(target = "id", ignore = true)
+	@Mapping(target = "medico", source = "medicoId")
+	@Mapping(target = "horarios", expression = "java(mapHorarios(source.horarios(), target))")
+	void createFromDto(AgendaCreationDTO source, @MappingTarget Agenda target);
+	
+	default List<Consulta> mapHorarios(List<String> horarios, Agenda agenda) {
+		if(horarios == null)
+			return null;
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm", Locale.ENGLISH);
+		
+		List<Consulta> list = new ArrayList<Consulta>(horarios.size());
+		for(String horario: horarios) {
+			if(horario != null) 
+				list.add(new Consulta(null, agenda, LocalTime.parse(horario, formatter)));
+		}
+		
+		return list;
+	}
+
 	List<AgendaDTO> mapAgendaToAgendaDTO(List<Agenda> agendas);
 	
 	default List<String> map(List<Consulta> consultas) {
@@ -23,7 +51,7 @@ public interface AgendaMapper {
 		
 		List<String> list = new ArrayList<>(consultas.size());
 		for(Consulta consulta: consultas) {
-			if(this.isHorarioDisponivel(consulta))
+			if(consulta.getDataAgendamento() == null)
 				list.add(this.map(consulta));
 		}
 		
@@ -31,16 +59,9 @@ public interface AgendaMapper {
 	}
 	
 	default String map(Consulta consulta) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm", Locale.ENGLISH);
 		
 		return consulta.getHorario().format(formatter).toString();
 	}
-	
-	default boolean isHorarioDisponivel(Consulta consulta) {
-		return consulta.getDataAgendamento() == null;
-	}
-	
-	@Mapping(target = "id", ignore = true)
-	void update(Agenda source, @MappingTarget Agenda target);
 	
 }

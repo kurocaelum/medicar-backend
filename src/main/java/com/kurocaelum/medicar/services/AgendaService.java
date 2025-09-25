@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.kurocaelum.medicar.dto.AgendaCreationDTO;
 import com.kurocaelum.medicar.dto.AgendaDTO;
 import com.kurocaelum.medicar.entities.Agenda;
 import com.kurocaelum.medicar.mappers.AgendaMapper;
@@ -40,8 +41,11 @@ public class AgendaService {
 		return obj.get();
 	}
 	
-	public Agenda insert(Agenda obj) {
-		return repository.save(obj);
+	public Agenda insert(AgendaCreationDTO obj) {
+		Agenda entity = new Agenda();
+		agendaMapper.createFromDto(obj, entity);
+		
+		return repository.save(entity);
 	}
 	
 	public void delete(Long id) {
