@@ -5,9 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -30,7 +27,6 @@ public class Medico implements Serializable {
 	private String email;
 	
 	@OneToMany(mappedBy = "medico", cascade = CascadeType.ALL)
-	@Fetch(FetchMode.JOIN)
 	@JsonIgnore
 	private List<Agenda> agenda = new ArrayList<Agenda>();
 	
