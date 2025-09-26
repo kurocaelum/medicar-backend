@@ -21,7 +21,10 @@ import com.kurocaelum.medicar.services.MedicoService;
 public interface AgendaMapper {
 	
 	@Mapping(target = "id", ignore = true)
-	void update(Agenda source, @MappingTarget Agenda target);
+	@Mapping(target = "medico", ignore = true)
+	@Mapping(target = "horarios", ignore = true)
+	void updateDia(Agenda source, @MappingTarget Agenda target);
+
 	
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "medico", source = "medicoId")

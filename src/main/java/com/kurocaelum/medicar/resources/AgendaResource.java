@@ -65,10 +65,9 @@ public class AgendaResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-//	TODO precisa do objeto Agenda inteiro, não basta AgendaDTO? (Agenda retornável por /details)
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Agenda> update(@PathVariable Long id, @RequestBody Agenda obj) {
-		obj = service.update(id, obj);
+	public ResponseEntity<Agenda> updateDia(@PathVariable Long id, @RequestBody Agenda obj) {
+		obj = service.updateDia(id, obj);
 		
 		return ResponseEntity.ok().body(obj);
 	}
