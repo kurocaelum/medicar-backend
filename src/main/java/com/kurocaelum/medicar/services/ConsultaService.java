@@ -1,6 +1,10 @@
 package com.kurocaelum.medicar.services;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +13,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.kurocaelum.medicar.dto.ConsultaDTO;
+import com.kurocaelum.medicar.dto.ConsultaUpdateDTO;
+import com.kurocaelum.medicar.entities.Agenda;
 import com.kurocaelum.medicar.entities.Consulta;
 import com.kurocaelum.medicar.mappers.ConsultaMapper;
 import com.kurocaelum.medicar.repositories.ConsultaRepository;
@@ -22,6 +28,9 @@ public class ConsultaService {
 
 	@Autowired
 	private ConsultaRepository repository;
+	
+	@Autowired
+	private AgendaService agendaService;
 	
 	@Autowired
 	private ConsultaMapper consultaMapper;
@@ -66,4 +75,23 @@ public class ConsultaService {
 			throw new ResourceNotFoundException(id);
 		}
 	}
+	
+//	TODO checar se Agenda referenciada possui horario referenciado; Mudar data_agendamento pra localTime.now()
+	public ConsultaDTO marcarConsulta(ConsultaUpdateDTO obj) {
+		if(!agendaService.existsById(obj.agenda_id())) 
+			return null;
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm", Locale.ENGLISH);
+		LocalTime horario = LocalTime.parse(obj.horario(), formatter);
+		
+		Agenda agenda = agendaService.findById(obj.agenda_id());
+		
+		Consulta consulta = agenda.getHorarios().stream().filter(h -> h.getHorario().equals(horario)).findFirst().get();
+		consulta.setDataAgendamento(LocalDateTime.now());
+		
+		this.update(consulta.getId(), consulta);
+		
+		return consultaMapper.map(consulta);
+	}
+	
 }

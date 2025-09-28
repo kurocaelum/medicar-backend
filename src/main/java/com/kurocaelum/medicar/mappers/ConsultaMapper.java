@@ -16,7 +16,7 @@ public interface ConsultaMapper {
 	
 	@Mapping(target = "dia", source = "consulta.agenda.dia", dateFormat = "dd/MM/yyyy")
 	@Mapping(target = "horario", source = "consulta.horario", dateFormat = "HH:mm")
-	@Mapping(target = "dataAgendamento", source = "consulta.dataAgendamento", dateFormat = "dd/MM/yyyy")
+	@Mapping(target = "dataAgendamento", source = "consulta.dataAgendamento", dateFormat = "yyyy-MM-dd HH:mm:ss")
 	@Mapping(target = "medico", source = "consulta.agenda.medico")
 	ConsultaDTO map(Consulta consulta);
 	

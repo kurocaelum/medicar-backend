@@ -16,7 +16,6 @@ import com.kurocaelum.medicar.entities.Agenda;
 import com.kurocaelum.medicar.entities.Consulta;
 import com.kurocaelum.medicar.services.MedicoService;
 
-//@Mapper(componentModel = "spring", uses = { MedicoService.class }, collectionMappingStrategy = CollectionMappingStrategy.ADDER_PREFERRED)
 @Mapper(componentModel = "spring", uses = { MedicoService.class })
 public interface AgendaMapper {
 	
