@@ -45,9 +45,16 @@ public class ConsultaResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
-	@DeleteMapping(value = "/{id}")
+	@DeleteMapping(value = "/delete/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		service.delete(id);
+		
+		return ResponseEntity.noContent().build();
+	}
+	
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<Void> desmarcar(@PathVariable Long id) {
+		service.desmarcar(id);
 		
 		return ResponseEntity.noContent().build();
 	}

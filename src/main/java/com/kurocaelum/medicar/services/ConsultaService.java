@@ -64,6 +64,21 @@ public class ConsultaService {
 			throw new DatabaseException(e.getMessage());
 		}
 	}
+
+	public void desmarcar(Long id) {
+		try {
+			if (!repository.existsById(id))
+				throw new ResourceNotFoundException(id);
+			
+			Consulta obj = this.findById(id);
+			obj.setDataAgendamento(null);
+			repository.save(obj);
+		} catch (EmptyResultDataAccessException e) {
+			throw new ResourceNotFoundException(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new DatabaseException(e.getMessage());
+		}
+	}
 	
 	public Consulta update(Long id, Consulta obj) {
 		try {
@@ -76,7 +91,6 @@ public class ConsultaService {
 		}
 	}
 	
-//	TODO checar se Agenda referenciada possui horario referenciado; Mudar data_agendamento pra localTime.now()
 	public ConsultaDTO marcarConsulta(ConsultaUpdateDTO obj) {
 		if(!agendaService.existsById(obj.agenda_id())) 
 			return null;
