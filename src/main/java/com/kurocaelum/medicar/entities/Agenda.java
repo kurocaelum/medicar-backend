@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -14,8 +13,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter @Setter @NoArgsConstructor
 public class Agenda implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -32,58 +35,11 @@ public class Agenda implements Serializable {
 	@OneToMany(mappedBy = "agenda", cascade = CascadeType.ALL)
 	private List<Consulta> horarios = new ArrayList<Consulta>();
 	
-	public Agenda(){}
-
 	public Agenda(Long id, Medico medico, LocalDate dia) {
 		super();
 		this.id = id;
 		this.medico = medico;
 		this.dia = dia;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Medico getMedico() {
-		return medico;
-	}
-
-	public void setMedico(Medico medico) {
-		this.medico = medico;
-	}
-
-	public LocalDate getDia() {
-		return dia;
-	}
-
-	public void setDia(LocalDate dia) {
-		this.dia = dia;
-	}
-
-	public List<Consulta> getHorarios() {
-		return horarios;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Agenda other = (Agenda) obj;
-		return Objects.equals(id, other.id);
 	}
 
 }
