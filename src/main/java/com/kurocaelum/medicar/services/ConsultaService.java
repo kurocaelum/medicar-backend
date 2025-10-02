@@ -46,7 +46,7 @@ public class ConsultaService {
 	
 	public Consulta findById(Long id) {
 		Optional<Consulta> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	public Consulta insert(Consulta obj) {

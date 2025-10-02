@@ -32,7 +32,7 @@ public class MedicoService {
 	
 	public Medico findById(Long id) {
 		Optional<Medico> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	public Medico insert(MedicoCreationDTO obj) {

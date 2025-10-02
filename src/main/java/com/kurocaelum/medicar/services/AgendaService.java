@@ -38,7 +38,7 @@ public class AgendaService {
 	
 	public Agenda findById(Long id) {
 		Optional<Agenda> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	public boolean existsById(Long id) {
