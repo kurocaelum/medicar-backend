@@ -36,6 +36,9 @@ public class MedicoService {
 	}
 	
 	public Medico insert(MedicoCreationDTO obj) {
+		if(repository.existsByCrm(obj.crm()))
+			throw new DatabaseException("CRM já cadastrado.");
+		
 		Medico entity = medicoMapper.createFromDto(obj);
 		
 		return repository.save(entity);
