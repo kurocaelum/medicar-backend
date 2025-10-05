@@ -49,6 +49,9 @@ public class AgendaService {
 		Agenda entity = new Agenda();
 		agendaMapper.createFromDto(obj, entity);
 		
+		if(repository.findByDiaAndMedico(entity.getDia(), entity.getMedico()) != null)
+			throw new DatabaseException("Agenda já cadastrada para esse dia.");
+		
 		return repository.save(entity);
 	}
 	
