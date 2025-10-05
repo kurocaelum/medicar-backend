@@ -1,5 +1,6 @@
 package com.kurocaelum.medicar.services;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -93,16 +94,25 @@ public class ConsultaService {
 	
 	public ConsultaDTO marcarConsulta(ConsultaUpdateDTO obj) {
 		if(!agendaService.existsById(obj.agenda_id())) 
-			return null;
+			throw new DatabaseException("Agenda não encontrada.");
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm", Locale.ENGLISH);
 		LocalTime horario = LocalTime.parse(obj.horario(), formatter);
 		
+		if(horario.isBefore(LocalTime.now()))
+			throw new DatabaseException("Horário especificado já passou.");
+		
 		Agenda agenda = agendaService.findById(obj.agenda_id());
 		
-		Consulta consulta = agenda.getHorarios().stream().filter(h -> h.getHorario().equals(horario)).findFirst().get();
-		consulta.setDataAgendamento(LocalDateTime.now());
+		if(agenda.getDia().isBefore(LocalDate.now()))
+			throw new DatabaseException("Dia da agenda especificada já passou.");
 		
+		Consulta consulta = agenda.getHorarios().stream().filter(h -> h.getHorario().equals(horario)).findFirst().get();
+		
+		if(consulta.getDataAgendamento() != null)
+			throw new DatabaseException("Consulta já marcada.");
+		
+		consulta.setDataAgendamento(LocalDateTime.now());
 		this.update(consulta.getId(), consulta);
 		
 		return consultaMapper.map(consulta);
