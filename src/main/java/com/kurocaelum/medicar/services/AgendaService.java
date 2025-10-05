@@ -1,5 +1,6 @@
 package com.kurocaelum.medicar.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,9 +50,12 @@ public class AgendaService {
 		Agenda entity = new Agenda();
 		agendaMapper.createFromDto(obj, entity);
 		
+		if(entity.getDia().isBefore(LocalDate.now()))
+			throw new DatabaseException("Não permitido cadastrar Agenda para dias passados.");
+		
 		if(repository.findByDiaAndMedico(entity.getDia(), entity.getMedico()) != null)
 			throw new DatabaseException("Agenda já cadastrada para esse dia.");
-		
+				
 		return repository.save(entity);
 	}
 	
