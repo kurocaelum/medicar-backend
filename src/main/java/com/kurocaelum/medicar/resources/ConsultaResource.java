@@ -54,7 +54,7 @@ public class ConsultaResource {
 	
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> desmarcar(@PathVariable Long id) {
-		service.desmarcar(id);
+		service.desmarcarConsulta(id);
 		
 		return ResponseEntity.noContent().build();
 	}

@@ -66,12 +66,20 @@ public class ConsultaService {
 		}
 	}
 
-	public void desmarcar(Long id) {
+	public void desmarcarConsulta(Long id) {
 		try {
-			if (!repository.existsById(id))
-				throw new ResourceNotFoundException(id);
-			
 			Consulta obj = this.findById(id);
+			
+			if(obj.getDataAgendamento() == null)
+				throw new DatabaseException("Essa consulta não possui agendamento marcado.");
+			
+			if(obj.getAgenda().getDia().isBefore(LocalDate.now()))
+				throw new DatabaseException("Não é possível desmarcar consulta realizada em data passada.");
+
+			// Exceção para proibir desmarcar consulta que ocorreu no mesmo dia em horário mais cedo 						
+			if(obj.getAgenda().getDia().equals(LocalDate.now()) && obj.getHorario().isBefore(LocalTime.now()))
+				throw new DatabaseException("Não é possível desmarcar consulta realizada em data passada.");
+			
 			obj.setDataAgendamento(null);
 			repository.save(obj);
 		} catch (EmptyResultDataAccessException e) {
