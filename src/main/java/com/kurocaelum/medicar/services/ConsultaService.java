@@ -9,8 +9,10 @@ import java.util.Locale;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.kurocaelum.medicar.dto.ConsultaDTO;
@@ -37,7 +39,7 @@ public class ConsultaService {
 	private ConsultaMapper consultaMapper;
 	
 	public List<Consulta> findAll() {
-		return repository.findAll();
+		return repository.findAll(Sort.by(Sort.Order.asc("agenda.dia"), Sort.Order.asc("horario")));
 	}
 	
 	public List<ConsultaDTO> findAllDto() {
