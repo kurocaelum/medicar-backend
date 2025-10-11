@@ -1,5 +1,6 @@
 package com.kurocaelum.medicar.mappers;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -24,7 +25,6 @@ public interface AgendaMapper {
 	@Mapping(target = "horarios", ignore = true)
 	void updateDia(Agenda source, @MappingTarget Agenda target);
 
-	
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "medico", source = "medicoId")
 	@Mapping(target = "horarios", expression = "java(mapHorarios(source.horarios(), target))")
@@ -45,7 +45,23 @@ public interface AgendaMapper {
 		return list;
 	}
 
-	List<AgendaDTO> mapAgendaToAgendaDTO(List<Agenda> agendas);
+	default List<AgendaDTO> toAgendaDTO(List<Agenda> agendas){
+		if(agendas == null)
+			return null;
+
+		List<AgendaDTO> list = new ArrayList<AgendaDTO>(agendas.size());
+		for(Agenda agenda: agendas) {
+			if(!agenda.getDia().isBefore(LocalDate.now())){
+				AgendaDTO dto = this.toAgendaDTO(agenda);
+				if(!dto.horarios().isEmpty())
+					list.add(dto);
+			}
+		}
+
+		return list;
+	}
+
+	AgendaDTO toAgendaDTO(Agenda agenda);
 	
 	default List<String> map(List<Consulta> consultas) {
 		if(consultas == null)
@@ -53,8 +69,11 @@ public interface AgendaMapper {
 		
 		List<String> list = new ArrayList<>(consultas.size());
 		for(Consulta consulta: consultas) {
-			if(consulta.getDataAgendamento() == null)
+			if(consulta.getDataAgendamento() == null && 
+				( !consulta.getAgenda().getDia().isBefore(LocalDate.now()) && !consulta.getHorario().isBefore(LocalTime.now()) )
+			) {
 				list.add(this.map(consulta));
+			}
 		}
 		
 		return list;

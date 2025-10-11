@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.kurocaelum.medicar.dto.AgendaCreationDTO;
@@ -29,11 +30,11 @@ public class AgendaService {
 	private AgendaMapper agendaMapper;
 	
 	public List<Agenda> findAll() {
-		return repository.findAll();
+		return repository.findAll(Sort.by(Sort.Order.asc("dia")));
 	}
 	
 	public List<AgendaDTO> findAllDto() {
-		List<AgendaDTO> list = agendaMapper.mapAgendaToAgendaDTO(this.findAll());
+		List<AgendaDTO> list = agendaMapper.toAgendaDTO(this.findAll());
 		return list;
 	}
 	
