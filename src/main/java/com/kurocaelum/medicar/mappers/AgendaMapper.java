@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.print.DocFlavor.STRING;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -44,14 +46,21 @@ public interface AgendaMapper {
 		
 		return list;
 	}
-
-	default List<AgendaDTO> toAgendaDTO(List<Agenda> agendas){
+	
+	default List<AgendaDTO> toAgendaDTO(List<Agenda> agendas, List<Long> medicos, List<String> crms, LocalDate data_inicio, LocalDate data_final){
 		if(agendas == null)
 			return null;
 
 		List<AgendaDTO> list = new ArrayList<AgendaDTO>(agendas.size());
 		for(Agenda agenda: agendas) {
 			if(!agenda.getDia().isBefore(LocalDate.now())){
+				if(
+					(medicos != null && !medicos.contains(agenda.getMedico().getId())) ||
+					(crms != null && !crms.contains(agenda.getMedico().getCrm())) ||
+					(data_inicio != null && agenda.getDia().isBefore(data_inicio)) ||
+					(data_final != null && agenda.getDia().isAfter(data_final))
+				) continue;
+				
 				AgendaDTO dto = this.toAgendaDTO(agenda);
 				if(!dto.horarios().isEmpty())
 					list.add(dto);

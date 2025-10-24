@@ -33,8 +33,8 @@ public class AgendaService {
 		return repository.findAll(Sort.by(Sort.Order.asc("dia")));
 	}
 	
-	public List<AgendaDTO> findAllDto() {
-		List<AgendaDTO> list = agendaMapper.toAgendaDTO(this.findAll());
+	public List<AgendaDTO> findAllDto(List<Long> medicos, List<String> crms, LocalDate data_inicio, LocalDate data_final) {
+		List<AgendaDTO> list = agendaMapper.toAgendaDTO(this.findAll(), medicos, crms, data_inicio, data_final);
 		return list;
 	}
 	
