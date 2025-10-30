@@ -29,6 +29,8 @@ public class Medico implements Serializable {
 	private String crm;
 	private String nome;
 	private String email;
+
+	private Especialidade especialidade;
 	
 	@OneToMany(mappedBy = "medico", cascade = CascadeType.ALL)
 	@JsonIgnore
