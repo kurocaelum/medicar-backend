@@ -28,6 +28,10 @@ public class EspecialidadeService {
     public List<Especialidade> findAll() {
         return repository.findAll();
     }
+    
+	public List<Especialidade> findAll(String searchString) {
+        return repository.findByNomeContainsIgnoreCase(searchString);
+    }
 
     public Especialidade findById(Long id) {
         Optional<Especialidade> obj = repository.findById(id);

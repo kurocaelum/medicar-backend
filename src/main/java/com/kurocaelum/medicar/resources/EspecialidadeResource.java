@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -26,8 +27,15 @@ public class EspecialidadeResource {
     private EspecialidadeService service;
 
     @GetMapping
-    public ResponseEntity<List<Especialidade>> findAll() {
-        List<Especialidade> list = service.findAll();
+    public ResponseEntity<List<Especialidade>> findAll(
+		@RequestParam(required = false) String search
+	) {
+        List<Especialidade> list;
+
+		if(search == null)
+			list = service.findAll();
+		else
+			list = service.findAll(search);
 
         return ResponseEntity.ok().body(list);
     }
