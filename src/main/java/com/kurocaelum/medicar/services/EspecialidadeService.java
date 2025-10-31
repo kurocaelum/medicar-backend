@@ -35,6 +35,9 @@ public class EspecialidadeService {
     }
 
     public Especialidade insert(Especialidade obj) {
+		if(repository.existsByNome(obj.getNome()))
+			throw new DatabaseException("Especialidade já cadastrada.");
+
 		return repository.save(obj);
 	}
 	
