@@ -1,5 +1,6 @@
 package com.kurocaelum.medicar.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,8 +27,20 @@ public class MedicoService {
 	@Autowired
 	private MedicoMapper medicoMapper;
 	
-	public List<Medico> findAll() {
-		return repository.findAll();
+	public List<Medico> findAll(String search, List<Long> especialidades) {
+		List<Medico> fullList = repository.findAll();
+		List<Medico> list = new ArrayList<Medico>(fullList.size());
+
+		for(Medico medico: fullList) {
+			if(
+				(search != null && !medico.getNome().toLowerCase().contains(search)) ||
+				(especialidades != null && !especialidades.contains(medico.getEspecialidade().getId()))
+			) continue;
+
+			list.add(medico);
+		}
+		
+		return list;
 	}
 	
 	public Medico findById(Long id) {
