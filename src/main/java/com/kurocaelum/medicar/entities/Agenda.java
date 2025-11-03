@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Getter @Setter @NoArgsConstructor @EqualsAndHashCode
+@Getter @Setter @NoArgsConstructor @EqualsAndHashCode(of = "id")
 public class Agenda implements Serializable {
 	private static final long serialVersionUID = 1L;
 
