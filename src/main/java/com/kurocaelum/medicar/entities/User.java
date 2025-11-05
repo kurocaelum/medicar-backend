@@ -1,6 +1,11 @@
 package com.kurocaelum.medicar.entities;
 
-import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,23 +19,33 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "tb_user")
-@Getter @Setter @NoArgsConstructor @EqualsAndHashCode
-public class User implements Serializable {
+@Getter @Setter @NoArgsConstructor @EqualsAndHashCode(of = "id")
+public class User implements UserDetails {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String nome;
+	private String username;
 	private String email;
 	private String password;
 	
-	public User(Long id, String nome, String email, String password) {
+	public User(Long id, String username, String email, String password) {
 		super();
 		this.id = id;
-		this.nome = nome;
+		this.username = username;
 		this.email = email;
 		this.password = password;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+	}
+
+	@Override
+	public String getUsername() {
+		return this.username;
 	}
 
 }
