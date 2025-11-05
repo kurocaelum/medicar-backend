@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kurocaelum.medicar.dto.AuthenticationDTO;
 import com.kurocaelum.medicar.dto.LoginResponseDTO;
+import com.kurocaelum.medicar.dto.RegisterDTO;
 import com.kurocaelum.medicar.entities.User;
 import com.kurocaelum.medicar.repositories.UserRepository;
 import com.kurocaelum.medicar.services.TokenService;
@@ -31,7 +32,7 @@ public class AuthenticationResource {
 	@Autowired
 	private TokenService tokenService;
 
-    @PostMapping("/login")
+    @PostMapping("login")
 	public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data) {
 		var usernamePassword = new UsernamePasswordAuthenticationToken(data.username(), data.password());
 		var auth = this.authenticationManager.authenticate(usernamePassword);
@@ -42,7 +43,7 @@ public class AuthenticationResource {
 	}
 	
 	@PostMapping("register")
-	public ResponseEntity register(@RequestBody @Valid AuthenticationDTO data) {
+	public ResponseEntity register(@RequestBody @Valid RegisterDTO data) {
 		if(this.repository.findByUsername(data.username()) != null) 
 			return ResponseEntity.badRequest().build();
 		
@@ -50,6 +51,7 @@ public class AuthenticationResource {
 		User newUser = new User();
 		newUser.setUsername(data.username());
 		newUser.setPassword(encryptedPassword);
+		newUser.setEmail(data.email());
 		
 		this.repository.save(newUser);
 		return ResponseEntity.ok().build();

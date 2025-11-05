@@ -27,15 +27,15 @@ public class User implements UserDetails {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String username;
-	private String email;
 	private String password;
+	private String email;
 	
-	public User(Long id, String username, String email, String password) {
+	public User(Long id, String username, String password, String email) {
 		super();
 		this.id = id;
 		this.username = username;
-		this.email = email;
 		this.password = password;
+		this.email = email;
 	}
 
 	@Override
