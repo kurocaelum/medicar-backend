@@ -77,7 +77,8 @@ public interface AgendaMapper {
 		List<String> list = new ArrayList<>(consultas.size());
 		for(Consulta consulta: consultas) {
 			if(consulta.getDataAgendamento() == null && 
-				( !consulta.getAgenda().getDia().isBefore(LocalDate.now()) && !consulta.getHorario().isBefore(LocalTime.now()) )
+				( !consulta.getAgenda().getDia().isBefore(LocalDate.now()) && 
+				!( consulta.getAgenda().getDia().equals(LocalDate.now()) && consulta.getHorario().isBefore(LocalTime.now()) ) )
 			) {
 				list.add(this.map(consulta));
 			}
