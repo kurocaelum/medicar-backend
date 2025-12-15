@@ -33,6 +33,10 @@ public class Consulta implements Serializable {
 	@JoinColumn(name = "agenda_id")
 	@JsonIgnore
 	private Agenda agenda;
+
+	@ManyToOne
+	@JsonIgnore
+	private User user = null;
 	
 	public Consulta(Long id, Agenda agenda, LocalTime horario) {
 		super();

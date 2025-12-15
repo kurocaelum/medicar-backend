@@ -19,6 +19,7 @@ import com.kurocaelum.medicar.dto.ConsultaDTO;
 import com.kurocaelum.medicar.dto.ConsultaUpdateDTO;
 import com.kurocaelum.medicar.entities.Agenda;
 import com.kurocaelum.medicar.entities.Consulta;
+import com.kurocaelum.medicar.entities.User;
 import com.kurocaelum.medicar.mappers.ConsultaMapper;
 import com.kurocaelum.medicar.repositories.ConsultaRepository;
 import com.kurocaelum.medicar.services.exceptions.DatabaseException;
@@ -34,6 +35,9 @@ public class ConsultaService {
 	
 	@Autowired
 	private AgendaService agendaService;
+
+	@Autowired
+	private UserService userService;
 	
 	@Autowired
 	private ConsultaMapper consultaMapper;
@@ -82,6 +86,9 @@ public class ConsultaService {
 			if(obj.getAgenda().getDia().equals(LocalDate.now()) && obj.getHorario().isBefore(LocalTime.now()))
 				throw new DatabaseException("Não é possível desmarcar consulta realizada em data passada.");
 			
+			if(obj.getUser() != null)
+				obj.setUser(null);
+			
 			obj.setDataAgendamento(null);
 			repository.save(obj);
 		} catch (EmptyResultDataAccessException e) {
@@ -108,23 +115,25 @@ public class ConsultaService {
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm", Locale.ENGLISH);
 		LocalTime horario = LocalTime.parse(obj.horario(), formatter);
-		
-		if(horario.isBefore(LocalTime.now()))
-			throw new DatabaseException("Horário especificado já passou.");
-		
-		Agenda agenda = agendaService.findById(obj.agenda_id());
-		
+
+		Agenda agenda = agendaService.findById(obj.agenda_id());		
 		if(agenda.getDia().isBefore(LocalDate.now()))
 			throw new DatabaseException("Dia da agenda especificada já passou.");
 		
-		Consulta consulta = agenda.getHorarios().stream().filter(h -> h.getHorario().equals(horario)).findFirst().get();
+		if(agenda.getDia().equals(LocalDate.now()) && horario.isBefore(LocalTime.now()))
+			throw new DatabaseException("Horário especificado já passou.");
 		
+		Consulta consulta = agenda.getHorarios().stream().filter(h -> h.getHorario().equals(horario)).findFirst().get();
 		if(consulta.getDataAgendamento() != null)
 			throw new DatabaseException("Consulta já marcada.");
 		
 		consulta.setDataAgendamento(LocalDateTime.now());
+
+		User user = userService.findById(obj.user_id());
+		consulta.setUser(user);
+		user.getConsultas().add(consulta);
+
 		this.update(consulta.getId(), consulta);
-		
 		return consultaMapper.map(consulta);
 	}
 	

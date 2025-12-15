@@ -1,5 +1,6 @@
 package com.kurocaelum.medicar.entities;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -29,6 +31,9 @@ public class User implements UserDetails {
 	private String username;
 	private String password;
 	private String email;
+
+	@OneToMany(mappedBy = "user")
+	private List<Consulta> consultas = new ArrayList<Consulta>();
 	
 	public User(Long id, String username, String password, String email) {
 		super();
