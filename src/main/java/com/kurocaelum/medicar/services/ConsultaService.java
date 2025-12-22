@@ -46,8 +46,8 @@ public class ConsultaService {
 		return repository.findAll(Sort.by(Sort.Order.asc("agenda.dia"), Sort.Order.asc("horario")));
 	}
 	
-	public List<ConsultaDTO> findAllDto() {
-		List<ConsultaDTO> list = consultaMapper.mapConsultaToConsultaDTO(this.findAll());
+	public List<ConsultaDTO> findAllDto(Long userId) {
+		List<ConsultaDTO> list = consultaMapper.mapConsultaToConsultaDTO(this.findAll(), userId);
 		return list;
 	}
 	

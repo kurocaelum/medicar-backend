@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kurocaelum.medicar.dto.ConsultaDTO;
@@ -25,8 +26,10 @@ public class ConsultaResource {
 	private ConsultaService service;
 	
 	@GetMapping
-	public ResponseEntity<List<ConsultaDTO>> findAllDto() {
-		List<ConsultaDTO> list = service.findAllDto();
+	public ResponseEntity<List<ConsultaDTO>> findAllDto(
+		@RequestParam(required = false) Long user
+	) {
+		List<ConsultaDTO> list = service.findAllDto(user);
 		
 		return ResponseEntity.ok().body(list);
 	}

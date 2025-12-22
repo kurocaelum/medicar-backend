@@ -24,7 +24,7 @@ public interface ConsultaMapper {
 	@Mapping(target = "id", ignore = true)
 	void update(Consulta source, @MappingTarget Consulta target);
 
-	default List<ConsultaDTO> mapConsultaToConsultaDTO(List<Consulta> consultas) {
+	default List<ConsultaDTO> mapConsultaToConsultaDTO(List<Consulta> consultas, Long userId) {
 		if (consultas == null)
 			return null;
 			
@@ -32,6 +32,9 @@ public interface ConsultaMapper {
 		for(Consulta consulta: consultas) {
 			if (consulta.getAgenda().getDia().isAfter(LocalDate.now()) 
 			|| (consulta.getAgenda().getDia().equals(LocalDate.now()) && (consulta.getHorario().isAfter(LocalTime.now())))) {
+				if (userId != null && (consulta.getUser() == null || consulta.getUser().getId() != userId) )
+					continue;
+				
 				list.add(this.map(consulta));
 			}
 		}
