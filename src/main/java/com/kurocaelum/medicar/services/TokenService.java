@@ -25,7 +25,7 @@ public class TokenService {
 			
 			String token = JWT.create()
 					.withIssuer("medicar")
-					.withSubject(user.getUsername())
+					.withSubject(user.getId().toString())
 					.withExpiresAt(genExpirationDate())
 					.sign(algorithm);
 			
