@@ -10,8 +10,10 @@ import com.kurocaelum.medicar.services.EspecialidadeService;
 
 @Mapper(componentModel = "spring", uses = {EspecialidadeService.class})
 public interface MedicoMapper {
-	
+		
 	@Mapping(target = "id", ignore = true)
+	@Mapping(target = "especialidade", ignore = true)
+	@Mapping(target = "agenda", ignore = true)
 	void update(Medico source, @MappingTarget Medico target);
 	
 	@Mapping(target = "id", ignore = true)
