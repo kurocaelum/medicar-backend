@@ -8,6 +8,7 @@ Projeto implementado com Spring Boot 3.5.2 e Java 21.
 ### Login
 
 #### Requisição
+
 ```
 POST /auth/login
 {
@@ -17,6 +18,7 @@ POST /auth/login
 ```
 
 #### Resposta
+
 ```
 {
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
@@ -26,6 +28,7 @@ POST /auth/login
 ### Cadastro
 
 #### Requisição
+
 ```
 {
     "username": "admin",
@@ -43,14 +46,17 @@ Não há retorno (vazio)
 ## Usuários
 
 ### Listar
+
 Lista todos os usuários cadastrados
 
 #### Requisição
+
 ```
 GET /users
 ```
 
 #### Resposta
+
 ```
 [
     {
@@ -95,14 +101,17 @@ GET /users
 ```
 
 ### Visualizar por ID
+
 Retorna os dados do usuário especificado pelo user_id
 
 #### Requisição
+
 ```
 GET /users/<user_id>
 ```
 
 #### Resposta
+
 ```
 {
     "id": 15,
@@ -135,6 +144,7 @@ Salva novo usuário no banco de dados
 **Projetado para ser usado apenas internamente pelo sistema**. O cadastro de novo usuário deve ser realizado através do endpoint de [Cadastro](#cadastro)
 
 #### Requisição
+
 ```
 POST /users
 {
@@ -145,6 +155,7 @@ POST /users
 ```
 
 #### Resposta
+
 ```
 {
     "id": 19,
@@ -165,9 +176,11 @@ POST /users
 ```
 
 ### Remover
+
 Deleta os dados do usuário especificado pelo user_id
 
 #### Requisição
+
 ```
 DELETE /users/<user_id>
 ```
@@ -179,14 +192,17 @@ Não há retorno (vazio)
 ## Especialidades
 
 ### Listar
+
 Lista todas as especialidades cadastradas
 
 #### Requisição
+
 ```
 GET /especialidades
 ```
 
 #### Resposta
+
 ```
 [
     {
@@ -205,6 +221,7 @@ GET /especialidades
 ```
 
 #### Filtros
+
 * Nome da especialidade (termo de pesquisa)
 
 ```
@@ -212,14 +229,17 @@ GET /especialidades/?search=ped
 ```
 
 ### Visualizar por ID
+
 Retorna os dados da especialidade especificada pelo especialidade_id
 
 #### Requisição
+
 ```
 GET /users/<user_id>
 ```
 
 #### Resposta
+
 ```
 {
     "id": 2,
@@ -232,6 +252,7 @@ GET /users/<user_id>
 Salva nova especialidade no banco de dados  
 
 #### Requisição
+
 ```
 {
     "nome": "Neurologia"
@@ -239,6 +260,7 @@ Salva nova especialidade no banco de dados
 ```
 
 #### Resposta
+
 ```
 {
     "id": 6,
@@ -247,12 +269,15 @@ Salva nova especialidade no banco de dados
 ```
 
 #### Regras de negócio
+
 * Não é possível inserir especialidade com mesmo nome de outra especialidade já cadastrada
 
 ### Remover
+
 Deleta os dados da especialidade especificada pelo especialidade_id
 
 #### Requisição
+
 ```
 DELETE /especialidades/<especialidade_id>
 ```
@@ -262,9 +287,11 @@ DELETE /especialidades/<especialidade_id>
 Não há retorno (vazio)
 
 ### Atualizar
+
 Edita os dados da especialidade especificada pelo especialidade_id
 
 #### Requisição
+
 ```
 PUT /especialidades/<especialidade_id>
 {
@@ -273,6 +300,7 @@ PUT /especialidades/<especialidade_id>
 ```
 
 #### Resposta
+
 ```
 {
     "id": 5,
@@ -283,14 +311,17 @@ PUT /especialidades/<especialidade_id>
 ## Médicos
 
 ### Listar
+
 Lista todos os médicos cadastrados
 
 #### Requisição
+
 ```
 GET /medicos
 ```
 
 #### Resposta
+
 ```
 [
     {
@@ -326,14 +357,17 @@ GET /medicos/?search=maria&especialidade=1&especialidade=3
 ```
 
 ### Visualizar por ID
+
 Retorna os dados do médico especificado pelo medico_id
 
 #### Requisição
+
 ```
 GET /medicos/<medico_id>
 ```
 
 #### Resposta
+
 ```
 {
     "id": 4,
@@ -348,9 +382,11 @@ GET /medicos/<medico_id>
 ```
 
 ### Inserir
+
 Salva novo médico no banco de dados
 
 #### Requisição
+
 ```
 POST /medicos
 {
@@ -364,6 +400,7 @@ POST /medicos
 * "email" opcional
 
 #### Resposta
+
 ```
 {
     "id": 5,
@@ -376,21 +413,27 @@ POST /medicos
     }
 }
 ```
+
 ### Remover
+
 Deleta os dados do médico especificado pelo medico_id
 
 #### Requisição
+
 ```
 DELETE /medicos/<medico_id>
 ```
 
 #### Resposta
+
 Não há retorno (vazio)
 
 ### Atualizar
+
 Edita os dados do médico especificado pelo medico_id
 
 #### Requisição
+
 ```
 PUT /medicos/<medico_id>
 {
@@ -403,6 +446,7 @@ PUT /medicos/<medico_id>
 * "email" opcional
 
 #### Resposta
+
 ```
 {
     "id": 1,
@@ -419,14 +463,17 @@ PUT /medicos/<medico_id>
 ## Agendas
 
 ### Listar
+
 Lista todas as agendas médicas cadastradas
 
 #### Requisição
+
 ```
 GET /agendas
 ```
 
 #### Resposta
+
 ```
 [
     {
@@ -472,11 +519,13 @@ GET /agendas
 ```
 
 #### Regras de negócio
+
 * Ordenado pela data (crescente)
 * Não retorna agendas de dias passados
 * Retorna apenas horários disponíveis (sem agendamento)
 
 #### Filtros
+
 * Identificador de um ou mais médicos
 * Identificador de um ou mais CRM
 * Intervalo de data
@@ -489,15 +538,18 @@ GET /agendas/?crm=2544&crm=3711&data_inicio=2022-01-01&data_final=2022-01-05
 ```
 
 ### Listagem detalhada
+
 Lista os objetos Agenda conforme definidos na camada de entidades, sem conversão via DTO.  
 Exibe também os horários indisponíveis
 
 #### Requisição
+
 ```
 GET /agendas/details
 ```
 
 #### Resposta
+
 ```
 [
     {
@@ -576,14 +628,17 @@ GET /agendas/details
 ```
 
 ### Visualizar por ID
+
 Retorna os dados detalhados da agenda especificada pelo agenda_id
 
 #### Requisição
+
 ```
 GET /agendas/<agenda_id>
 ```
 
 #### Resposta
+
 ```
 {
     "id": 4,
@@ -624,9 +679,11 @@ GET /agendas/<agenda_id>
 ```
 
 ### Inserir
+
 Salva nova agenda no banco de dados
 
 #### Requisição
+
 ```
 POST /agendas
 {
@@ -644,6 +701,7 @@ POST /agendas
 * "horarios" em formato "HH:mm"
 
 #### Resposta
+
 ```
 {
     "id": 8,
@@ -684,13 +742,16 @@ POST /agendas
 ```
 
 #### Regras de negócio
+
 * Não é possível inserir uma agenda com data passada
 * Não é possível inserir uma agenda duplicata (i.e. com combinação de médico e data)
 
 #### Remover
+
 Deleta agenda especificada pelo agenda_id
 
 #### Requisição
+
 ```
 DELETE /agendas/<agenda_id>
 ```
@@ -700,9 +761,11 @@ DELETE /agendas/<agenda_id>
 Não há retorno (vazio)
 
 ### Atualizar data
+
 Edita a data de uma agenda especificada pelo agenda_id
 
 #### Requisição
+
 ```
 PUT /agendas/<agenda_id>
 {
@@ -711,6 +774,7 @@ PUT /agendas/<agenda_id>
 ```
 
 #### Resposta
+
 ```
 {
     "id": 4,
@@ -753,14 +817,17 @@ PUT /agendas/<agenda_id>
 ## Consultas
 
 ### Listar
+
 Lista todas as consultas cadastradas
 
 #### Requisição
+
 ```
 GET /consultas
 ```
 
 #### Resposta
+
 ```
 [
     {
@@ -799,11 +866,13 @@ GET /consultas
 ```
 
 #### Regras de negócio
+
 * Ordenado por agenda.data (crescente) e pelo horário (crescente)
 * Não retorna consultas de dias passados
 * Não retorna consultas que já passaram do horário (para consultas no dia atual)
 
 #### Filtros
+
 * Identificador de usuário
 ```
 # Retorna as consultas do usuário com user_id 15
@@ -811,14 +880,17 @@ GET /consultas?user=15
 ```
 
 ### Listagem detalhada
+
 Lista os objetos Consulta conforme definidos na camada de entidades, sem conversão via DTO.
 
 #### Requisição
+
 ```
 GET /consultas/details
 ```
 
 #### Resposta
+
 ```
 [
      {
@@ -838,15 +910,19 @@ GET /consultas/details
     }
 ]
 ```
+
 ### Visualizar por ID
+
 Retorna a consulta especificada pelo consulta_id
 
 #### Requisição
+
 ```
 GET /consultas/<consulta_id>
 ```
 
 #### Resposta
+
 ```
 {
     "id": 1,
@@ -867,14 +943,17 @@ GET /consultas/<consulta_id>
 ```
 
 ### Visualização detalhada por ID
+
 Retorna o objeto Consulta especificado pelo consulta_id conforme definido na camada de entidades, sem conversão via DTO.
 
 #### Requisição
+
 ```
 GET /consultas/details/<consulta_id>
 ```
 
 #### Resposta
+
 ```
 {
     "id": 1,
@@ -884,9 +963,11 @@ GET /consultas/details/<consulta_id>
 ```
 
 ### Remover
+
 Deleta uma consulta especificada pelo consulta_id
 
 #### Requisição
+
 ```
 DELETE /consultas/delete/<consulta_id>
 ```
@@ -896,9 +977,11 @@ DELETE /consultas/delete/<consulta_id>
 Não há retorno (vazio)
 
 ### Desmarcar consulta
+
 Desmarca uma consulta, tornando seu horário disponível novamente
 
 #### Requisição
+
 ```
 DELETE /consultas/<consulta_id>
 ```
@@ -908,14 +991,17 @@ DELETE /consultas/<consulta_id>
 Não há retorno (vazio)
 
 #### Regras de negócio
+
 * Não é possível desmarcar uma consulta sem agendamento marcado
 * Não é possível desmarcar uma consulta de uma data passada
 * Não é possível desmarcar uma consulta de um horário passado (caso seja no dia atual)
 
 ### Marcar consulta
+
 Marca uma consulta, tornando seu horário indisponível
 
 #### Requisição
+
 ```
 {
     "agenda_id": 1,
@@ -925,6 +1011,7 @@ Marca uma consulta, tornando seu horário indisponível
 ```
 
 #### Resposta
+
 ```
 {
     "id": 1,
@@ -945,7 +1032,8 @@ Marca uma consulta, tornando seu horário indisponível
 ```
 
 #### Regras de negócio
-* Não é possível marcar consulta para uma agenda inexistente
-* Não é possível marcar consulta em uma agenda com data passada
-* Não é possível marcar consulta em uma agenda com horário passado
-* Não é possível marcar consulta se já tiver sido marcada antes
+
+- Não é possível marcar consulta para uma agenda inexistente
+- Não é possível marcar consulta em uma agenda com data passada
+- Não é possível marcar consulta em uma agenda com horário passado
+- Não é possível marcar consulta se já tiver sido marcada antes
