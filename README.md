@@ -222,7 +222,7 @@ GET /especialidades
 
 #### Filtros
 
-* Nome da especialidade (termo de pesquisa)
+- Nome da especialidade (termo de pesquisa)
 
 ```
 GET /especialidades/?search=ped
@@ -270,7 +270,7 @@ Salva nova especialidade no banco de dados
 
 #### Regras de negócio
 
-* Não é possível inserir especialidade com mesmo nome de outra especialidade já cadastrada
+- Não é possível inserir especialidade com mesmo nome de outra especialidade já cadastrada
 
 ### Remover
 
@@ -349,8 +349,8 @@ GET /medicos
 
 #### Filtros
 
-* Identificador de uma ou mais especialidades
-* Nome do médico (termo de pesquisa)
+- Identificador de uma ou mais especialidades
+- Nome do médico (termo de pesquisa)
 
 ```
 GET /medicos/?search=maria&especialidade=1&especialidade=3
@@ -397,7 +397,7 @@ POST /medicos
 }
 ```
 
-* "email" opcional
+- "email" opcional
 
 #### Resposta
 
@@ -443,7 +443,7 @@ PUT /medicos/<medico_id>
 }
 ```
 
-* "email" opcional
+- "email" opcional
 
 #### Resposta
 
@@ -520,15 +520,16 @@ GET /agendas
 
 #### Regras de negócio
 
-* Ordenado pela data (crescente)
-* Não retorna agendas de dias passados
-* Retorna apenas horários disponíveis (sem agendamento)
+- Ordenado pela data (crescente)
+- Não retorna agendas de dias passados
+- Retorna apenas horários disponíveis (sem agendamento)
 
 #### Filtros
 
-* Identificador de um ou mais médicos
-* Identificador de um ou mais CRM
-* Intervalo de data
+- Identificador de um ou mais médicos
+- Identificador de um ou mais CRM
+- Intervalo de data
+
 ```
 # Retorna as agendas dos médicos 1 e 2 no período de 1 a 5 de janeiro
 GET /agendas/?medico=1&medico=2&data_inicio=2022-01-01&data_final=2022-01-05
@@ -697,8 +698,9 @@ POST /agendas
     ]
 }
 ```
-* "dia" em formato "yyyy-MM-dd"
-* "horarios" em formato "HH:mm"
+
+- "dia" em formato "yyyy-MM-dd"
+- "horarios" em formato "HH:mm"
 
 #### Resposta
 
@@ -743,8 +745,8 @@ POST /agendas
 
 #### Regras de negócio
 
-* Não é possível inserir uma agenda com data passada
-* Não é possível inserir uma agenda duplicata (i.e. com combinação de médico e data)
+- Não é possível inserir uma agenda com data passada
+- Não é possível inserir uma agenda duplicata (i.e. com combinação de médico e data)
 
 #### Remover
 
@@ -867,13 +869,14 @@ GET /consultas
 
 #### Regras de negócio
 
-* Ordenado por agenda.data (crescente) e pelo horário (crescente)
-* Não retorna consultas de dias passados
-* Não retorna consultas que já passaram do horário (para consultas no dia atual)
+- Ordenado por agenda.data (crescente) e pelo horário (crescente)
+- Não retorna consultas de dias passados
+- Não retorna consultas que já passaram do horário (para consultas no dia atual)
 
 #### Filtros
 
-* Identificador de usuário
+- Identificador de usuário
+
 ```
 # Retorna as consultas do usuário com user_id 15
 GET /consultas?user=15
@@ -992,9 +995,9 @@ Não há retorno (vazio)
 
 #### Regras de negócio
 
-* Não é possível desmarcar uma consulta sem agendamento marcado
-* Não é possível desmarcar uma consulta de uma data passada
-* Não é possível desmarcar uma consulta de um horário passado (caso seja no dia atual)
+- Não é possível desmarcar uma consulta sem agendamento marcado
+- Não é possível desmarcar uma consulta de uma data passada
+- Não é possível desmarcar uma consulta de um horário passado (caso seja no dia atual)
 
 ### Marcar consulta
 
