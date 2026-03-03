@@ -56,6 +56,11 @@ public class ConsultaService {
 		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
+	public ConsultaDTO findByIdDto(Long id) {
+		Optional<Consulta> obj = repository.findById(id);
+		return consultaMapper.map(obj.orElseThrow(() -> new ResourceNotFoundException(id)));
+	}
+	
 	public Consulta insert(Consulta obj) {
 		return repository.save(obj);
 	}

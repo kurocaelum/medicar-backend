@@ -839,7 +839,7 @@ GET /consultas/details
 ]
 ```
 ### Visualizar por ID
-Retorna os dados detalhados da consulta especificada pelo consulta_id
+Retorna a consulta especificada pelo consulta_id
 
 #### Requisição
 ```
@@ -850,8 +850,36 @@ GET /consultas/<consulta_id>
 ```
 {
     "id": 1,
+    "dia": "01/12/2026",
+    "horario": "14:00",
+    "dataAgendamento": "2026-02-27 17:31:27",
+    "medico": {
+        "id": 1,
+        "crm": "0001",
+        "nome": "Yukari Takeba",
+        "email": "takeba@sees.com",
+        "especialidade": {
+            "id": 3,
+            "nome": "Psiquiatria"
+        }
+    }
+}
+```
+
+### Visualização detalhada por ID
+Retorna o objeto Consulta especificado pelo consulta_id conforme definido na camada de entidades, sem conversão via DTO.
+
+#### Requisição
+```
+GET /consultas/details/<consulta_id>
+```
+
+#### Resposta
+```
+{
+    "id": 1,
     "horario": "14:00:00",
-    "dataAgendamento": "2025-12-18T20:17:52.144476"
+    "dataAgendamento": "2026-02-27T17:31:27.82419"
 }
 ```
 

@@ -33,15 +33,22 @@ public class ConsultaResource {
 		
 		return ResponseEntity.ok().body(list);
 	}
-	
+
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<ConsultaDTO> findByIdDto(@PathVariable Long id) {
+		ConsultaDTO obj = service.findByIdDto(id);
+		
+		return ResponseEntity.ok().body(obj);
+	}
+
 	@GetMapping(value = "/details")
 	public ResponseEntity<List<Consulta>> findAll() {
 		List<Consulta> list = service.findAll();
 		
 		return ResponseEntity.ok().body(list);
 	}
-	
-	@GetMapping(value = "/{id}")
+
+	@GetMapping(value = "/details/{id}")
 	public ResponseEntity<Consulta> findById(@PathVariable Long id) {
 		Consulta obj = service.findById(id);
 		
