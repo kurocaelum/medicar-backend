@@ -756,8 +756,47 @@ PUT /agendas/<agenda_id>
 Lista todas as consultas cadastradas
 
 #### Requisição
+```
+GET /consultas
+```
 
 #### Resposta
+```
+[
+    {
+        "id": 15,
+        "dia": "26/03/2050",
+        "horario": "16:00",
+        "dataAgendamento": null,
+        "medico": {
+            "id": 1,
+            "crm": "0001",
+            "nome": "Yukari Takeba",
+            "email": "takeba@sees.com",
+            "especialidade": {
+                "id": 3,
+                "nome": "Psiquiatria"
+            }
+        }
+    },
+    {
+        "id": 16,
+        "dia": "26/03/2050",
+        "horario": "17:00",
+        "dataAgendamento": null,
+        "medico": {
+            "id": 1,
+            "crm": "0001",
+            "nome": "Yukari Takeba",
+            "email": "takeba@sees.com",
+            "especialidade": {
+                "id": 3,
+                "nome": "Psiquiatria"
+            }
+        }
+    }
+]
+```
 
 #### Regras de negócio
 * Ordenado por agenda.data (crescente) e pelo horário (crescente)
