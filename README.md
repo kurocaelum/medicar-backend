@@ -3,6 +3,20 @@
 Projeto implementado com Spring Boot 3.5.2 e Java 21.  
 [Frontend](https://github.com/kurocaelum/medicar-frontend) implementado separadamente como uma aplicação Angular.
 
+## OpenAPI
+
+### Definição da API em JSON
+
+```
+GET /api-docs
+```
+
+### Swagger UI
+
+```
+GET /swagger
+```
+
 ## Autenticação
 
 ### Login
