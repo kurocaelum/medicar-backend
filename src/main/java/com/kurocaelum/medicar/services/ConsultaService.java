@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -42,13 +43,15 @@ public class ConsultaService {
 	@Autowired
 	private ConsultaMapper consultaMapper;
 	
+	// TODO testar se retorna lista vazia se repository.findAll() retornar null
 	public List<Consulta> findAll() {
-		return repository.findAll(Sort.by(Sort.Order.asc("agenda.dia"), Sort.Order.asc("horario")));
+		return Optional.ofNullable(repository.findAll(Sort.by(Sort.Order.asc("agenda.dia"), Sort.Order.asc("horario"))))
+			.orElseGet(Collections::emptyList);
 	}
 	
 	public List<ConsultaDTO> findAllDto(Long userId) {
-		List<ConsultaDTO> list = consultaMapper.mapConsultaToConsultaDTO(this.findAll(), userId);
-		return list;
+		return Optional.ofNullable(consultaMapper.mapConsultaToConsultaDTO(this.findAll(), userId))
+			.orElseGet(Collections::emptyList);
 	}
 	
 	public Consulta findById(Long id) {
